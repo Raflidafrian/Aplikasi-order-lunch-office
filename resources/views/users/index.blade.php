@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
         <x-alert :errors="$errors"/>
-        <table class="table table-sm" id="table2">d
+        <table class="table table-sm" id="table2">
             <thead>
                 <tr>
                     <th>No</th>
@@ -23,9 +23,9 @@
             <tbody>
                 @foreach ($users as $index => $user)
                 <tr>
+                    <td>{{ $index + 1 }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $index + 1 }}</td>
                     <td>
                         <div class="d-flex align-items-center">
                             <x-user.form-user :id="$user->id"/>

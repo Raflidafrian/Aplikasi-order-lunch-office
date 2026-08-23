@@ -9,7 +9,7 @@ class PenerimaanBarang extends Model
     protected $guarded = ['id'];
 
     public static function nomorPenerimaan(){
-        $max = self::masx('id');
+        $max = self::max('id');
         $prefix = 'PBR-';
         $date = date('dmy');
         $nomor = $prefix . $date . str_pad($max + 1, 4, '0', STR_PAD_LEFT);

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nomor_penerimaan');
             $table->string('nama_produk');
             $table->string('aty');
+            $table->integer('harga_beli');
+            $table->integer('sub_total');
             $table->timestamps();
         });
     }

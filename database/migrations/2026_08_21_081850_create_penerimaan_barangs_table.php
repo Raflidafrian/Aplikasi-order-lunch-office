@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_penerimaan');
             $table->string('nomor_faktur');
-            $table->string('distirbutor');
+            $table->string('distributor');
             $table->string('petugas_penerima');
             $table->timestamps();
         });
