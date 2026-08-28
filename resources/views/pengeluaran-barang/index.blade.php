@@ -2,14 +2,12 @@
 @section('content_title', 'Pengeluaran Barang / Transaksi')
 @section('content')
 <div class="card">
-    <form action="{{ route('penerimaan-barang.store') }}" method="post" id="form-penerimaan-barang">
+    <form action="{{ route('pengeluaran-barang.store') }}" method="post" id="form-pengeluaran-barang">
         @csrf
         <div id="data-hidden"></div>
         <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
-        <h4 class="h5">Penerimaan Barang</h4>
-        <div>
-            <button type="submit" class="btn btn-primary">Simpan Penerimaan Barang</button>
-        </div>
+        <h4 class="h5">Pengeluaran Barang / Transaksi</h4>
+        
     </div>
     <div class="card-body">
         <div class="d-flex">
@@ -34,29 +32,70 @@
             </div>
         </div>
     </div>
-    </form>
-</div>
-<div class="card">
-    <div class="card-body">
-        <table class="table table-sm" id="table-produk">
-            <thead>
-                <tr>
-                    <th>Nama Produk</th>
-                    <th>Qty</th>
-                    <th>Sub Total</th>
-                    <th>Opsi</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
     </div>
-</div>
+        <div class="row">
+            <div class="col-9">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-sm" id="table-produk">
+                                <thead>
+                                    <tr>
+                                        <th>Qty</th>
+                                        <th>Nama Produk</th>
+                                        <th>Opsi</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <label for="">Total</label>
+                            <input type="numbe" class="form-control" id="total" readonly>
+                        </div>
+                        <div>
+                            <label for="">Kembalian</label>
+                            <input type="number" class="form-control" id="kembalian" readonly>
+                        </div>
+                        <div>
+                            <label for="">Jumlah Bayar</label>
+                            <input type="number" class="form-control" name="bayar" id="bayar" min="1">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary w-100 mt-2">Simpan Transaksi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
 @endsection
 
 @push('script')
     <script>
         $(document).ready(function () {
             let selectedProduk = {};
+
+
+            function hitungTotal() {
+                let total = 0;
+
+                $('#table-produk tbody tr').each(function(){
+                    const subTotal = parseInt($(this).find('td:eq(2)').text()) || 0;
+                    total += subTotal;
+                });
+
+                $("#total").val(total);
+            }
+
+
+
             $('#select2').select2({
                 theme:'bootstrap',
                 placeholder:'Cari Produk...',
@@ -180,6 +219,7 @@
                 $("#current_stok").val(null);
                 $("#harga_jual").val(null);
                 $("#qty").val(null);
+                hitungTotal();
             });
 
             $("#table-produk").on("click", ".btn-remove", function () { // perbaikan
@@ -187,14 +227,15 @@
                 
             });
 
-            $("#form-penerimaan-barang").on("submit", function () {
+            $("#form-pengeluaran-barang").on("submit", function () {
                 $("#data-hidden").html("");
+                hitungTotal();
 
                 $("#table-produk tbody tr").each(function(index, row){
                     const namaProduk = $(row).find("td:eq(0)").text();
                     const qty        = $(row).find("td:eq(1)").text();
                     const produkId   = $(row).data("id");
-                    const subTotal   = $(row).find("td:eq(3)").text();
+                    const subTotal   = $(row).find("td:eq(2)").text();
 
                     const inputProduk       = `<input type="hidden" name="produk[${index}][nama_produk]" value="${namaProduk}"></input>`;
                     const inputQty          = `<input type="hidden" name="produk[${index}][qty]" value="${qty}"/>`;
@@ -203,6 +244,15 @@
 
                     $("#data-hidden").append(inputProduk).append(inputQty).append(inputProdukId).append(inputSubTotal);
                 });
+            });
+
+            $("#bayar").on("input", function () {
+                const total = parseInt($("#total").val()) || 0;
+                const bayar = parseInt($(this).val()) || 0;
+                const kembalian = bayar - total;
+
+
+                $("#kembalian").val(kembalian);
             });
 
         });
