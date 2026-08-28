@@ -15,4 +15,8 @@ class PenerimaanBarang extends Model
         $nomor = $prefix . $date . str_pad($max + 1, 4, '0', STR_PAD_LEFT);
         return $nomor;
     }
+
+    public function items(){
+        return $this->hasMany(ItemPenerimaanBarang::class, 'nomor_penerimaan', 'nomor_penerimaan');
+    }
 }

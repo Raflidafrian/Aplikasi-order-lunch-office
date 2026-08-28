@@ -7,6 +7,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PenerimaanBarangController;
+use App\Http\Controllers\PengeluaranBarangController;
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
@@ -20,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/get-data')->as('get-data.')->group(function(){
         Route::get('/produk', [ProductController::class, 'getData'])->name('produk');
         Route::get('/cek-stok-produk', [ProductController::class, 'cekStok'])->name('cek-stok');
+        Route::get('cek-harga-produk', [ProductController::class, 'cekHarga'])->name('cek-harga');
     });
 
 
@@ -54,5 +56,19 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'store')->name('store');
 
+    });
+    Route::prefix('pengeluaran-barang')->as('pengeluaran-barang.')->controller(PengeluaranBarangController::class)->group(function
+    () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store');
+
+    });
+
+
+    Route::prefix('laporan')->as('laporan.')->group(function(){
+        Route::prefix('penerimaan-barang')->as('penerimaan-barang.')->controller(PenerimaanBarangController::class)->group(function () {
+            Route::get('/laporan', 'laporan')->name('laporan');
+            Route::get('/laporan/{nomor_penerimaan}/detail', 'detaillaporan')->name('detail-laporan');
+        });
     });
 });

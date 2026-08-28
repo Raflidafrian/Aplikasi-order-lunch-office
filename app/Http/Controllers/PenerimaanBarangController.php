@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PenerimaanBarang;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use Illuminate\Support\Carbon;
 
 class PenerimaanBarangController extends Controller
 {
@@ -53,4 +54,22 @@ class PenerimaanBarangController extends Controller
 
         return redirect()->route('penerimaan-barang.index');
     }
+
+
+    public function laporan(){
+
+    $penerimaanBarang  = PenerimaanBarang::orderBy('created_at', 'desc')->get()->map(function($item){
+        $item->tanggal_penerimaan = Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y');
+        return $item;
+    });
+        return view('laporan.penerimaan-barang.laporan', compact('penerimaanBarang'));
+    }
+
+    public function detailLaporan(String $nomorPenerimaan){
+        $data = PenerimaanBarang::with('items')->where('nomor_penerimaan', $nomorPenerimaan)->firstOrfail();
+        $data->tanggal_penerimaan = Carbon::parse($data->created_at)->locale('id')->translatedFormat('l, d F Y');
+        $data->total = $data->items->sum('sub_total');
+        return view('laporan.penerimaan-barang.detail', compact('data'));
+    }
+
 }

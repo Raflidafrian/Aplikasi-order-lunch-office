@@ -58,6 +58,28 @@ public function __construct()
             "route_active" => "penerimaan-barang.*",
             "is_dropdown" => false, // Diperbaiki dari id_dropdown
         ],
+        [
+            "label" => "Pengeluaran Barang",
+            "icon" => "fas fa-store",
+            "route_name" => "pengeluaran-barang.index",
+            "route_active" => "pengeluaran-barang.*",
+            "is_dropdown" => false, // Diperbaiki dari id_dropdown
+        ],
+
+        [
+            "label" => "Laporan",
+            "icon" => "fas fa-mosaic fa-solid fa-file",
+            "route_active" => "laporan.*",
+            "is_dropdown" => true, // Diperbaiki dari id_dropdown
+            "dropdown" => [
+                [
+                    "label" => "Penerimaan barang",
+                    "route_active" => "laporan.penerimaan-barang.*",
+                    "route_name" => "laporan.penerimaan-barang.laporan",
+                ],
+                 
+            ]
+        ],
     ];
 }
 

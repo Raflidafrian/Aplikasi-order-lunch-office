@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_penerimaan');
             $table->string('nama_produk');
-            $table->string('aty');
+            $table->string('qty');
             $table->integer('harga_beli');
             $table->integer('sub_total');
             $table->timestamps();
