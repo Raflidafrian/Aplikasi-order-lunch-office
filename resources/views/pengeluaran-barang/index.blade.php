@@ -227,6 +227,7 @@
 
             $("#table-produk").on("click", ".btn-remove", function () { // perbaikan
                 $(this).closest('tr').remove();
+                hitungTotal();
                 
             });
 
@@ -244,7 +245,7 @@
                     const inputProduk       = `<input type="hidden" name="produk[${index}][nama_produk]" value="${namaProduk}"></input>`;
                     const inputQty          = `<input type="hidden" name="produk[${index}][qty]" value="${qty}"/>`;
                     const inputProdukId     = `<input type="hidden" name="produk[${index}][produk_id]" value="${produkId}"/>`;
-                    const inputHargaJual     = `<input type="hidden" name="produk[${index}][harg_jual]" value="${hargaJual}"/>`;
+                    const inputHargaJual     = `<input type="hidden" name="produk[${index}][harga_jual]" value="${hargaJual}"/>`;
                     const inputSubTotal     = `<input type="hidden" name="produk[${index}][sub_total]" value="${subTotal}"/>`;
 
                     $("#data-hidden").append(inputProduk).append(inputQty).append(inputProdukId).append(inputSubTotal).append(inputHargaJual);

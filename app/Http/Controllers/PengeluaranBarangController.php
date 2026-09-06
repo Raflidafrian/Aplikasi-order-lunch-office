@@ -61,12 +61,12 @@ class PengeluaranBarangController extends Controller
                 'nomor_pengeluaran'     => $data->nomor_pengeluaran,
                 'nama_produk'           => $item['nama_produk'],
                 'qty'                   => $item['qty'],
-                'harga'                 => $item['harga_jual'],
+                'harga_jual'                 => $item['harga_jual'],
                 'sub_total'             => $item['sub_total'],
             ]);
 
 
-            Product::where('id', $item['produk_id'])->decrement('stok'. $item['qty']);
+            Product::where('id', $item['produk_id'])->decrement('stok', $item['qty']);
         }
 
         toast()->success('Transaksi Tersimpan');
