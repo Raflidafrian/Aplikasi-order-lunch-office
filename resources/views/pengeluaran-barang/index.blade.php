@@ -178,10 +178,10 @@
                 //     alert('Data produk tidak ditemukan!');
                 // }
 
-                // if(qty > currentStok) {
-                //     alert('Jumlah barang tidak tersedia');
-                //     return;
-                // }
+                if(qty > currentStok) {
+                    alert('Jumlah barang tidak tersedia');
+                    return;
+                }
 
 
                 let exist = false;
@@ -191,6 +191,19 @@
                     if(rowProduk === produk.nama_produk){
                         let currentQty = parseInt($(this).find("td:eq(1)").text());
                         let newQty = currentQty + parseInt(qty);
+
+                        if(newQty > currentStok) {
+                        alert('Total quality melebihi stok tersedia!');
+                            exist = true;
+                            return false;
+                        }
+
+                        let newSubTotal = newQty * parseInt(hargaJual);
+                        $(this).find("td:eq(1)").text(newQty);
+                        $(this).find("td:eq(3)").text(newSubTotal);
+                        
+                        exist = true;
+                        return false;
 
                         $(this).find("td:eq(1)").text(newQty);
                         exist = true;

@@ -52,7 +52,7 @@ public function __construct()
         ],
 
         [
-            "label" => "Penerimaan Barang",
+            "label" => "Penerima an Barang",
             "icon" => "fas fa-truck-loading",
             "route_name" => "penerimaan-barang.index",
             "route_active" => "penerimaan-barang.*",
@@ -76,6 +76,11 @@ public function __construct()
                     "label" => "Penerimaan barang",
                     "route_active" => "laporan.penerimaan-barang.*",
                     "route_name" => "laporan.penerimaan-barang.laporan",
+                ],
+                [
+                    "label" => "Pengeluaran barang (Transaksi)",
+                    "route_active" => "laporan.pengeluaran-barang.*",
+                    "route_name" => "laporan.pengeluaran-barang.laporan",
                 ],
                  
             ]
