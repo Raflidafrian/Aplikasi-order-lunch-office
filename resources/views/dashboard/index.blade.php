@@ -8,7 +8,7 @@
     <x-dashboard-card type="bg-danger" icon="fas fa-dollar-sign" label="Total Pendapatan" value="{{ $totalPendapatan }}"/>
 </div>
 <div class="row">
-    <div class="col-6">
+    <div class="col-8">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Transaksi Terakhir</h4>
@@ -39,5 +39,35 @@
             </div>
         </div>
     </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Produk Terlaris</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Produk</th>
+                            <th>Jumlah Terjual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($produkTerlaris as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->nama_produk }}</td>
+                            <td>{{ number_format($item->total_terjual) }} pcs</td>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                Menampilkan 5 Data Produk Terlaris
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemPengeluaranBarang;
+
+
+
 class DashboardController extends Controller
 {
     public function index()
@@ -25,6 +29,15 @@ class DashboardController extends Controller
             return $item;
         });
 
-        return view('dashboard.index', compact('totalUser', 'totalProduk', 'totalOrder', 'totalPendapatan', 'latestOrders'));
+        $produkTerlaris = ItemPengeluaranBarang::select('nama_produk')
+        ->selectRaw('SUM(qty) as total_terjual')
+        ->whereMonth('created_at', $bulanIni)
+        ->whereYear('created_at', $tahunIni)
+        ->groupBy('nama_produk')
+        ->orderByDesc('total_terjual')
+        ->limit(5)
+        ->get();
+        
+        return view('dashboard.index', compact('totalUser', 'totalProduk', 'totalOrder', 'totalPendapatan', 'latestOrders', 'produkTerlaris'));
     }
 }
